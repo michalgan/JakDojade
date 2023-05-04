@@ -40,8 +40,9 @@ public:
         }
         else if(length == 1){
             Item<T> Item = *last;
-            delete first;
             length--;
+            first = nullptr;
+            last = nullptr;
             return Item;
 
 
@@ -49,7 +50,6 @@ public:
         else{
             Item<T> item = *last;
             last = last->getPreviousItem();
-            delete last->getNextItem();
             last->setNextItem(nullptr);
             length--;
             return item;
@@ -71,7 +71,6 @@ public:
         else if(index == 0){
             Item<T> Item = *first;
             first = first->getNextItem();
-            delete first->getPreviousItem();
             first->setPreviousItem(nullptr);
             length--;
             return Item;
@@ -79,7 +78,6 @@ public:
         }
         else if(length == 1){
             Item<T> Item = *last;
-            delete first;
             length--;
             return Item;
         }
@@ -158,6 +156,14 @@ public:
         T temp = get(i1);
         replace(i1, get(i2));
         replace(i2, temp);
+    }
+    T& operator[](int index)
+    {
+        if (index >= length) {
+            cout << "Array index out of bound, exiting";
+            exit(0);
+        }
+        return *get(index);
     }
     ~List(){
         while(length){
